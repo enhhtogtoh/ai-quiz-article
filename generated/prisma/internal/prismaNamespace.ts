@@ -385,7 +385,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
-  Article: 'Article'
+  Article: 'Article',
+  Quiz: 'Quiz'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -401,7 +402,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "article"
+    modelProps: "user" | "article" | "quiz"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -553,6 +554,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Quiz: {
+      payload: Prisma.$QuizPayload<ExtArgs>
+      fields: Prisma.QuizFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.QuizFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.QuizFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizPayload>
+        }
+        findFirst: {
+          args: Prisma.QuizFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.QuizFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizPayload>
+        }
+        findMany: {
+          args: Prisma.QuizFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizPayload>[]
+        }
+        create: {
+          args: Prisma.QuizCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizPayload>
+        }
+        createMany: {
+          args: Prisma.QuizCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.QuizCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizPayload>[]
+        }
+        delete: {
+          args: Prisma.QuizDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizPayload>
+        }
+        update: {
+          args: Prisma.QuizUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizPayload>
+        }
+        deleteMany: {
+          args: Prisma.QuizDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.QuizUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.QuizUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizPayload>[]
+        }
+        upsert: {
+          args: Prisma.QuizUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizPayload>
+        }
+        aggregate: {
+          args: Prisma.QuizAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQuiz>
+        }
+        groupBy: {
+          args: Prisma.QuizGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuizGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.QuizCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuizCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -594,6 +669,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const UserScalarFieldEnum = {
   id: 'id',
+  clerkId: 'clerkId',
   isVerified: 'isVerified',
   email: 'email',
   name: 'name',
@@ -606,11 +682,30 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const ArticleScalarFieldEnum = {
   id: 'id',
+  clerkId: 'clerkId',
   title: 'title',
-  content: 'content'
+  content: 'content',
+  summary: 'summary',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updateAt: 'updateAt'
 } as const
 
 export type ArticleScalarFieldEnum = (typeof ArticleScalarFieldEnum)[keyof typeof ArticleScalarFieldEnum]
+
+
+export const QuizScalarFieldEnum = {
+  id: 'id',
+  clerkId: 'clerkId',
+  question: 'question',
+  options: 'options',
+  answer: 'answer',
+  articleId: 'articleId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type QuizScalarFieldEnum = (typeof QuizScalarFieldEnum)[keyof typeof QuizScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -780,6 +875,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   article?: Prisma.ArticleOmit
+  quiz?: Prisma.QuizOmit
 }
 
 /* Types for Logging */

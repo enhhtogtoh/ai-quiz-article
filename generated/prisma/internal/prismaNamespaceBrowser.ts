@@ -52,7 +52,8 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Article: 'Article'
+  Article: 'Article',
+  Quiz: 'Quiz'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -73,6 +74,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const UserScalarFieldEnum = {
   id: 'id',
+  clerkId: 'clerkId',
   isVerified: 'isVerified',
   email: 'email',
   name: 'name',
@@ -85,11 +87,30 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const ArticleScalarFieldEnum = {
   id: 'id',
+  clerkId: 'clerkId',
   title: 'title',
-  content: 'content'
+  content: 'content',
+  summary: 'summary',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updateAt: 'updateAt'
 } as const
 
 export type ArticleScalarFieldEnum = (typeof ArticleScalarFieldEnum)[keyof typeof ArticleScalarFieldEnum]
+
+
+export const QuizScalarFieldEnum = {
+  id: 'id',
+  clerkId: 'clerkId',
+  question: 'question',
+  options: 'options',
+  answer: 'answer',
+  articleId: 'articleId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type QuizScalarFieldEnum = (typeof QuizScalarFieldEnum)[keyof typeof QuizScalarFieldEnum]
 
 
 export const SortOrder = {

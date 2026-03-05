@@ -9,6 +9,7 @@ datasource db {
 
 model User {
     id         String    @id @unique @default(uuid())
+    clerkId    String
     isVerified Boolean   @default(false)
     email      String    @unique
     name       String
@@ -19,6 +20,7 @@ model User {
 
 model Article {
     id        String   @id @unique @default(uuid())
+    clerkId   String
     title     String
     content   String
     summary   String
@@ -31,6 +33,7 @@ model Article {
 
 model Quiz {
     id        String   @id @default(uuid())
+    clerkId   String
     question  String
     options   String[]
     answer    String
