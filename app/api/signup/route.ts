@@ -1,5 +1,5 @@
 import { Webhook } from "svix";
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 type Event = {
