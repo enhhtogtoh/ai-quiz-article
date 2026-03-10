@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { auth } from "@clerk/nextjs/server";
 
 export async function GET() {
   try {
@@ -13,7 +14,7 @@ export async function GET() {
       },
     });
 
-    return NextResponse.json(articles);
+    return NextResponse.json(articles, { status: 200 });
   } catch (error) {
     console.error("GET /api/articles error:", error);
     return NextResponse.json(
@@ -24,14 +25,15 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const { userId } = await auth();
+
   try {
     const body = await req.json();
+    const { title, content, summary } = body;
 
-    const { title, content, summary, clerkId, userId } = body;
-
-    if (!title || !content || !clerkId || !userId) {
+    if (!title || !content || !userId) {
       return NextResponse.json(
-        { error: "title, content, clerkId, userId required" },
+        { error: "title, content, clerkId, userId are required" },
         { status: 400 },
       );
     }
@@ -41,7 +43,7 @@ export async function POST(req: NextRequest) {
         title,
         content,
         summary: summary ?? "",
-        clerkId,
+        clerkId: userId,
         userId,
       },
     });

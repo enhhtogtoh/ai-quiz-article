@@ -18,14 +18,14 @@ export async function POST(req: NextRequest) {
     }
 
     const prompt = `
-From the article below, generate 3 multiple choice quiz questions.
+Generate 3 multiple choice quiz questions from the article below.
 
-Return ONLY valid JSON array in this format:
+Return ONLY valid JSON in this exact format:
 [
   {
     "question": "Question text",
-    "options": ["option 1", "option 2", "option 3", "option 4"],
-    "answer": "correct option text"
+    "options": ["Option 1", "Option 2", "Option 3", "Option 4"],
+    "answer": "Correct option text"
   }
 ]
 
@@ -39,7 +39,7 @@ ${content}
         {
           role: "system",
           content:
-            "You generate quizzes from articles. Return only valid JSON.",
+            "You generate quiz questions from articles. Return only valid JSON.",
         },
         {
           role: "user",
@@ -60,9 +60,9 @@ ${content}
       );
     }
 
-    return NextResponse.json({ quizzes });
+    return NextResponse.json({ quizzes }, { status: 200 });
   } catch (error) {
-    console.error("POST /api/generate-quiz error:", error);
+    console.error("POST /api/generate error:", error);
     return NextResponse.json(
       { error: "Failed to generate quiz" },
       { status: 500 },
