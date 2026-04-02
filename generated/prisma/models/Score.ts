@@ -191,7 +191,7 @@ export type ScoreGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 
 export type ScoreGroupByOutputType = {
   id: string
-  clerkId: string
+  clerkId: string | null
   articleId: string
   score: number
   timeSpent: number
@@ -203,7 +203,7 @@ export type ScoreGroupByOutputType = {
   _max: ScoreMaxAggregateOutputType | null
 }
 
-type GetScoreGroupByPayload<T extends ScoreGroupByArgs> = Prisma.PrismaPromise<
+export type GetScoreGroupByPayload<T extends ScoreGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<ScoreGroupByOutputType, T['by']> &
       {
@@ -223,17 +223,17 @@ export type ScoreWhereInput = {
   OR?: Prisma.ScoreWhereInput[]
   NOT?: Prisma.ScoreWhereInput | Prisma.ScoreWhereInput[]
   id?: Prisma.StringFilter<"Score"> | string
-  clerkId?: Prisma.StringFilter<"Score"> | string
+  clerkId?: Prisma.StringNullableFilter<"Score"> | string | null
   articleId?: Prisma.StringFilter<"Score"> | string
   score?: Prisma.IntFilter<"Score"> | number
   timeSpent?: Prisma.IntFilter<"Score"> | number
   createdAt?: Prisma.DateTimeFilter<"Score"> | Date | string
-  article?: Prisma.XOR<Prisma.ArticleScalarRelationFilter, Prisma.ArticleWhereInput>
+  article?: Prisma.XOR<Prisma.ArticleNullableScalarRelationFilter, Prisma.ArticleWhereInput> | null
 }
 
 export type ScoreOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  clerkId?: Prisma.SortOrder
+  clerkId?: Prisma.SortOrderInput | Prisma.SortOrder
   articleId?: Prisma.SortOrder
   score?: Prisma.SortOrder
   timeSpent?: Prisma.SortOrder
@@ -246,17 +246,17 @@ export type ScoreWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ScoreWhereInput | Prisma.ScoreWhereInput[]
   OR?: Prisma.ScoreWhereInput[]
   NOT?: Prisma.ScoreWhereInput | Prisma.ScoreWhereInput[]
-  clerkId?: Prisma.StringFilter<"Score"> | string
+  clerkId?: Prisma.StringNullableFilter<"Score"> | string | null
   articleId?: Prisma.StringFilter<"Score"> | string
   score?: Prisma.IntFilter<"Score"> | number
   timeSpent?: Prisma.IntFilter<"Score"> | number
   createdAt?: Prisma.DateTimeFilter<"Score"> | Date | string
-  article?: Prisma.XOR<Prisma.ArticleScalarRelationFilter, Prisma.ArticleWhereInput>
+  article?: Prisma.XOR<Prisma.ArticleNullableScalarRelationFilter, Prisma.ArticleWhereInput> | null
 }, "id">
 
 export type ScoreOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  clerkId?: Prisma.SortOrder
+  clerkId?: Prisma.SortOrderInput | Prisma.SortOrder
   articleId?: Prisma.SortOrder
   score?: Prisma.SortOrder
   timeSpent?: Prisma.SortOrder
@@ -273,7 +273,7 @@ export type ScoreScalarWhereWithAggregatesInput = {
   OR?: Prisma.ScoreScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ScoreScalarWhereWithAggregatesInput | Prisma.ScoreScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Score"> | string
-  clerkId?: Prisma.StringWithAggregatesFilter<"Score"> | string
+  clerkId?: Prisma.StringNullableWithAggregatesFilter<"Score"> | string | null
   articleId?: Prisma.StringWithAggregatesFilter<"Score"> | string
   score?: Prisma.IntWithAggregatesFilter<"Score"> | number
   timeSpent?: Prisma.IntWithAggregatesFilter<"Score"> | number
@@ -282,16 +282,16 @@ export type ScoreScalarWhereWithAggregatesInput = {
 
 export type ScoreCreateInput = {
   id?: string
-  clerkId: string
+  clerkId?: string | null
   score: number
   timeSpent?: number
   createdAt?: Date | string
-  article: Prisma.ArticleCreateNestedOneWithoutScoresInput
+  article?: Prisma.ArticleCreateNestedOneWithoutScoresInput
 }
 
 export type ScoreUncheckedCreateInput = {
   id?: string
-  clerkId: string
+  clerkId?: string | null
   articleId: string
   score: number
   timeSpent?: number
@@ -300,16 +300,16 @@ export type ScoreUncheckedCreateInput = {
 
 export type ScoreUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.IntFieldUpdateOperationsInput | number
   timeSpent?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  article?: Prisma.ArticleUpdateOneRequiredWithoutScoresNestedInput
+  article?: Prisma.ArticleUpdateOneWithoutScoresNestedInput
 }
 
 export type ScoreUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   articleId?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.IntFieldUpdateOperationsInput | number
   timeSpent?: Prisma.IntFieldUpdateOperationsInput | number
@@ -318,7 +318,7 @@ export type ScoreUncheckedUpdateInput = {
 
 export type ScoreCreateManyInput = {
   id?: string
-  clerkId: string
+  clerkId?: string | null
   articleId: string
   score: number
   timeSpent?: number
@@ -327,7 +327,7 @@ export type ScoreCreateManyInput = {
 
 export type ScoreUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.IntFieldUpdateOperationsInput | number
   timeSpent?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -335,7 +335,7 @@ export type ScoreUpdateManyMutationInput = {
 
 export type ScoreUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   articleId?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.IntFieldUpdateOperationsInput | number
   timeSpent?: Prisma.IntFieldUpdateOperationsInput | number
@@ -431,17 +431,9 @@ export type ScoreUncheckedUpdateManyWithoutArticleNestedInput = {
   deleteMany?: Prisma.ScoreScalarWhereInput | Prisma.ScoreScalarWhereInput[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type ScoreCreateWithoutArticleInput = {
   id?: string
-  clerkId: string
+  clerkId?: string | null
   score: number
   timeSpent?: number
   createdAt?: Date | string
@@ -449,7 +441,7 @@ export type ScoreCreateWithoutArticleInput = {
 
 export type ScoreUncheckedCreateWithoutArticleInput = {
   id?: string
-  clerkId: string
+  clerkId?: string | null
   score: number
   timeSpent?: number
   createdAt?: Date | string
@@ -486,7 +478,7 @@ export type ScoreScalarWhereInput = {
   OR?: Prisma.ScoreScalarWhereInput[]
   NOT?: Prisma.ScoreScalarWhereInput | Prisma.ScoreScalarWhereInput[]
   id?: Prisma.StringFilter<"Score"> | string
-  clerkId?: Prisma.StringFilter<"Score"> | string
+  clerkId?: Prisma.StringNullableFilter<"Score"> | string | null
   articleId?: Prisma.StringFilter<"Score"> | string
   score?: Prisma.IntFilter<"Score"> | number
   timeSpent?: Prisma.IntFilter<"Score"> | number
@@ -495,7 +487,7 @@ export type ScoreScalarWhereInput = {
 
 export type ScoreCreateManyArticleInput = {
   id?: string
-  clerkId: string
+  clerkId?: string | null
   score: number
   timeSpent?: number
   createdAt?: Date | string
@@ -503,7 +495,7 @@ export type ScoreCreateManyArticleInput = {
 
 export type ScoreUpdateWithoutArticleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.IntFieldUpdateOperationsInput | number
   timeSpent?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -511,7 +503,7 @@ export type ScoreUpdateWithoutArticleInput = {
 
 export type ScoreUncheckedUpdateWithoutArticleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.IntFieldUpdateOperationsInput | number
   timeSpent?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -519,7 +511,7 @@ export type ScoreUncheckedUpdateWithoutArticleInput = {
 
 export type ScoreUncheckedUpdateManyWithoutArticleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.IntFieldUpdateOperationsInput | number
   timeSpent?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -534,7 +526,7 @@ export type ScoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   score?: boolean
   timeSpent?: boolean
   createdAt?: boolean
-  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.Score$articleArgs<ExtArgs>
 }, ExtArgs["result"]["score"]>
 
 export type ScoreSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -544,7 +536,7 @@ export type ScoreSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   score?: boolean
   timeSpent?: boolean
   createdAt?: boolean
-  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.Score$articleArgs<ExtArgs>
 }, ExtArgs["result"]["score"]>
 
 export type ScoreSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -554,7 +546,7 @@ export type ScoreSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   score?: boolean
   timeSpent?: boolean
   createdAt?: boolean
-  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.Score$articleArgs<ExtArgs>
 }, ExtArgs["result"]["score"]>
 
 export type ScoreSelectScalar = {
@@ -568,23 +560,23 @@ export type ScoreSelectScalar = {
 
 export type ScoreOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clerkId" | "articleId" | "score" | "timeSpent" | "createdAt", ExtArgs["result"]["score"]>
 export type ScoreInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.Score$articleArgs<ExtArgs>
 }
 export type ScoreIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.Score$articleArgs<ExtArgs>
 }
 export type ScoreIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.Score$articleArgs<ExtArgs>
 }
 
 export type $ScorePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Score"
   objects: {
-    article: Prisma.$ArticlePayload<ExtArgs>
+    article: Prisma.$ArticlePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    clerkId: string
+    clerkId: string | null
     articleId: string
     score: number
     timeSpent: number
@@ -983,7 +975,7 @@ readonly fields: ScoreFieldRefs;
  */
 export interface Prisma__ScoreClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  article<T extends Prisma.ArticleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ArticleDefaultArgs<ExtArgs>>): Prisma.Prisma__ArticleClient<runtime.Types.Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  article<T extends Prisma.Score$articleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Score$articleArgs<ExtArgs>>): Prisma.Prisma__ArticleClient<runtime.Types.Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1215,6 +1207,11 @@ export type ScoreFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Skip the first `n` Scores.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Scores.
+   */
   distinct?: Prisma.ScoreScalarFieldEnum | Prisma.ScoreScalarFieldEnum[]
 }
 
@@ -1412,6 +1409,25 @@ export type ScoreDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Scores to delete.
    */
   limit?: number
+}
+
+/**
+ * Score.article
+ */
+export type Score$articleArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Article
+   */
+  select?: Prisma.ArticleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Article
+   */
+  omit?: Prisma.ArticleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ArticleInclude<ExtArgs> | null
+  where?: Prisma.ArticleWhereInput
 }
 
 /**

@@ -166,13 +166,13 @@ export type UserGroupByOutputType = {
   name: string
   createdAt: Date
   updatedAt: Date
-  clerkId: string
+  clerkId: string | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
 
-type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
+export type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<UserGroupByOutputType, T['by']> &
       {
@@ -197,7 +197,7 @@ export type UserWhereInput = {
   name?: Prisma.StringFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  clerkId?: Prisma.StringFilter<"User"> | string
+  clerkId?: Prisma.StringNullableFilter<"User"> | string | null
   articles?: Prisma.ArticleListRelationFilter
 }
 
@@ -208,7 +208,7 @@ export type UserOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  clerkId?: Prisma.SortOrder
+  clerkId?: Prisma.SortOrderInput | Prisma.SortOrder
   articles?: Prisma.ArticleOrderByRelationAggregateInput
 }
 
@@ -222,7 +222,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  clerkId?: Prisma.StringFilter<"User"> | string
+  clerkId?: Prisma.StringNullableFilter<"User"> | string | null
   articles?: Prisma.ArticleListRelationFilter
 }, "id" | "id" | "email">
 
@@ -233,7 +233,7 @@ export type UserOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  clerkId?: Prisma.SortOrder
+  clerkId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -249,7 +249,7 @@ export type UserScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
-  clerkId?: Prisma.StringWithAggregatesFilter<"User"> | string
+  clerkId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
@@ -259,7 +259,7 @@ export type UserCreateInput = {
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  clerkId: string
+  clerkId?: string | null
   articles?: Prisma.ArticleCreateNestedManyWithoutUserInput
 }
 
@@ -270,7 +270,7 @@ export type UserUncheckedCreateInput = {
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  clerkId: string
+  clerkId?: string | null
   articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -281,7 +281,7 @@ export type UserUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   articles?: Prisma.ArticleUpdateManyWithoutUserNestedInput
 }
 
@@ -292,7 +292,7 @@ export type UserUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   articles?: Prisma.ArticleUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -303,7 +303,7 @@ export type UserCreateManyInput = {
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  clerkId: string
+  clerkId?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -313,7 +313,7 @@ export type UserUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -323,7 +323,7 @@ export type UserUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -356,9 +356,9 @@ export type UserMinOrderByAggregateInput = {
   clerkId?: Prisma.SortOrder
 }
 
-export type UserScalarRelationFilter = {
-  is?: Prisma.UserWhereInput
-  isNot?: Prisma.UserWhereInput
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -373,16 +373,22 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type UserCreateNestedOneWithoutArticlesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutArticlesInput, Prisma.UserUncheckedCreateWithoutArticlesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutArticlesInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutArticlesNestedInput = {
+export type UserUpdateOneWithoutArticlesNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutArticlesInput, Prisma.UserUncheckedCreateWithoutArticlesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutArticlesInput
   upsert?: Prisma.UserUpsertWithoutArticlesInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutArticlesInput, Prisma.UserUpdateWithoutArticlesInput>, Prisma.UserUncheckedUpdateWithoutArticlesInput>
 }
@@ -394,7 +400,7 @@ export type UserCreateWithoutArticlesInput = {
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  clerkId: string
+  clerkId?: string | null
 }
 
 export type UserUncheckedCreateWithoutArticlesInput = {
@@ -404,7 +410,7 @@ export type UserUncheckedCreateWithoutArticlesInput = {
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  clerkId: string
+  clerkId?: string | null
 }
 
 export type UserCreateOrConnectWithoutArticlesInput = {
@@ -430,7 +436,7 @@ export type UserUpdateWithoutArticlesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateWithoutArticlesInput = {
@@ -440,7 +446,7 @@ export type UserUncheckedUpdateWithoutArticlesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -536,7 +542,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     name: string
     createdAt: Date
     updatedAt: Date
-    clerkId: string
+    clerkId: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1164,6 +1170,11 @@ export type UserFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Skip the first `n` Users.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Users.
+   */
   distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
 }
 

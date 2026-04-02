@@ -41,14 +41,14 @@ export async function POST(req: NextRequest, { params }: Context) {
       quizzes.map((quiz: QuizInput) => {
         // Convert answer text to index
         const answerIndex = quiz.options.indexOf(quiz.answer);
-        const answerValue = answerIndex >= 0 ? answerIndex.toString() : "0";
+        // const answerValue = answerIndex >= 0 ? answerIndex.toString() : "0";
 
         return prisma.quiz.create({
           data: {
             clerkId,
             question: quiz.question,
             options: quiz.options,
-            answer: answerValue,
+            answer: answerIndex >= 0 ? answerIndex : 0, 
             articleId,
           },
         });

@@ -169,17 +169,17 @@ export type ArticleGroupByOutputType = {
   id: string
   title: string
   content: string
-  clerkId: string
+  clerkId: string | null
   createdAt: Date
   summary: string
   updateAt: Date
-  userId: string
+  userId: string | null
   _count: ArticleCountAggregateOutputType | null
   _min: ArticleMinAggregateOutputType | null
   _max: ArticleMaxAggregateOutputType | null
 }
 
-type GetArticleGroupByPayload<T extends ArticleGroupByArgs> = Prisma.PrismaPromise<
+export type GetArticleGroupByPayload<T extends ArticleGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<ArticleGroupByOutputType, T['by']> &
       {
@@ -201,12 +201,12 @@ export type ArticleWhereInput = {
   id?: Prisma.StringFilter<"Article"> | string
   title?: Prisma.StringFilter<"Article"> | string
   content?: Prisma.StringFilter<"Article"> | string
-  clerkId?: Prisma.StringFilter<"Article"> | string
+  clerkId?: Prisma.StringNullableFilter<"Article"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Article"> | Date | string
   summary?: Prisma.StringFilter<"Article"> | string
   updateAt?: Prisma.DateTimeFilter<"Article"> | Date | string
-  userId?: Prisma.StringFilter<"Article"> | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  userId?: Prisma.StringNullableFilter<"Article"> | string | null
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   quizzes?: Prisma.QuizListRelationFilter
   scores?: Prisma.ScoreListRelationFilter
 }
@@ -215,11 +215,11 @@ export type ArticleOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
-  clerkId?: Prisma.SortOrder
+  clerkId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   summary?: Prisma.SortOrder
   updateAt?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  userId?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   quizzes?: Prisma.QuizOrderByRelationAggregateInput
   scores?: Prisma.ScoreOrderByRelationAggregateInput
@@ -232,12 +232,12 @@ export type ArticleWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ArticleWhereInput | Prisma.ArticleWhereInput[]
   title?: Prisma.StringFilter<"Article"> | string
   content?: Prisma.StringFilter<"Article"> | string
-  clerkId?: Prisma.StringFilter<"Article"> | string
+  clerkId?: Prisma.StringNullableFilter<"Article"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Article"> | Date | string
   summary?: Prisma.StringFilter<"Article"> | string
   updateAt?: Prisma.DateTimeFilter<"Article"> | Date | string
-  userId?: Prisma.StringFilter<"Article"> | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  userId?: Prisma.StringNullableFilter<"Article"> | string | null
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   quizzes?: Prisma.QuizListRelationFilter
   scores?: Prisma.ScoreListRelationFilter
 }, "id" | "id">
@@ -246,11 +246,11 @@ export type ArticleOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
-  clerkId?: Prisma.SortOrder
+  clerkId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   summary?: Prisma.SortOrder
   updateAt?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  userId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ArticleCountOrderByAggregateInput
   _max?: Prisma.ArticleMaxOrderByAggregateInput
   _min?: Prisma.ArticleMinOrderByAggregateInput
@@ -263,22 +263,22 @@ export type ArticleScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Article"> | string
   title?: Prisma.StringWithAggregatesFilter<"Article"> | string
   content?: Prisma.StringWithAggregatesFilter<"Article"> | string
-  clerkId?: Prisma.StringWithAggregatesFilter<"Article"> | string
+  clerkId?: Prisma.StringNullableWithAggregatesFilter<"Article"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Article"> | Date | string
   summary?: Prisma.StringWithAggregatesFilter<"Article"> | string
   updateAt?: Prisma.DateTimeWithAggregatesFilter<"Article"> | Date | string
-  userId?: Prisma.StringWithAggregatesFilter<"Article"> | string
+  userId?: Prisma.StringNullableWithAggregatesFilter<"Article"> | string | null
 }
 
 export type ArticleCreateInput = {
   id?: string
   title: string
   content: string
-  clerkId: string
+  clerkId?: string | null
   createdAt?: Date | string
   summary: string
   updateAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutArticlesInput
+  user?: Prisma.UserCreateNestedOneWithoutArticlesInput
   quizzes?: Prisma.QuizCreateNestedManyWithoutArticleInput
   scores?: Prisma.ScoreCreateNestedManyWithoutArticleInput
 }
@@ -287,11 +287,11 @@ export type ArticleUncheckedCreateInput = {
   id?: string
   title: string
   content: string
-  clerkId: string
+  clerkId?: string | null
   createdAt?: Date | string
   summary: string
   updateAt?: Date | string
-  userId: string
+  userId?: string | null
   quizzes?: Prisma.QuizUncheckedCreateNestedManyWithoutArticleInput
   scores?: Prisma.ScoreUncheckedCreateNestedManyWithoutArticleInput
 }
@@ -300,11 +300,11 @@ export type ArticleUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutArticlesNestedInput
+  user?: Prisma.UserUpdateOneWithoutArticlesNestedInput
   quizzes?: Prisma.QuizUpdateManyWithoutArticleNestedInput
   scores?: Prisma.ScoreUpdateManyWithoutArticleNestedInput
 }
@@ -313,11 +313,11 @@ export type ArticleUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quizzes?: Prisma.QuizUncheckedUpdateManyWithoutArticleNestedInput
   scores?: Prisma.ScoreUncheckedUpdateManyWithoutArticleNestedInput
 }
@@ -326,18 +326,18 @@ export type ArticleCreateManyInput = {
   id?: string
   title: string
   content: string
-  clerkId: string
+  clerkId?: string | null
   createdAt?: Date | string
   summary: string
   updateAt?: Date | string
-  userId: string
+  userId?: string | null
 }
 
 export type ArticleUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -347,11 +347,11 @@ export type ArticleUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ArticleListRelationFilter = {
@@ -400,6 +400,11 @@ export type ArticleMinOrderByAggregateInput = {
 export type ArticleScalarRelationFilter = {
   is?: Prisma.ArticleWhereInput
   isNot?: Prisma.ArticleWhereInput
+}
+
+export type ArticleNullableScalarRelationFilter = {
+  is?: Prisma.ArticleWhereInput | null
+  isNot?: Prisma.ArticleWhereInput | null
 }
 
 export type ArticleCreateNestedManyWithoutUserInput = {
@@ -464,10 +469,12 @@ export type ArticleCreateNestedOneWithoutScoresInput = {
   connect?: Prisma.ArticleWhereUniqueInput
 }
 
-export type ArticleUpdateOneRequiredWithoutScoresNestedInput = {
+export type ArticleUpdateOneWithoutScoresNestedInput = {
   create?: Prisma.XOR<Prisma.ArticleCreateWithoutScoresInput, Prisma.ArticleUncheckedCreateWithoutScoresInput>
   connectOrCreate?: Prisma.ArticleCreateOrConnectWithoutScoresInput
   upsert?: Prisma.ArticleUpsertWithoutScoresInput
+  disconnect?: Prisma.ArticleWhereInput | boolean
+  delete?: Prisma.ArticleWhereInput | boolean
   connect?: Prisma.ArticleWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ArticleUpdateToOneWithWhereWithoutScoresInput, Prisma.ArticleUpdateWithoutScoresInput>, Prisma.ArticleUncheckedUpdateWithoutScoresInput>
 }
@@ -476,7 +483,7 @@ export type ArticleCreateWithoutUserInput = {
   id?: string
   title: string
   content: string
-  clerkId: string
+  clerkId?: string | null
   createdAt?: Date | string
   summary: string
   updateAt?: Date | string
@@ -488,7 +495,7 @@ export type ArticleUncheckedCreateWithoutUserInput = {
   id?: string
   title: string
   content: string
-  clerkId: string
+  clerkId?: string | null
   createdAt?: Date | string
   summary: string
   updateAt?: Date | string
@@ -529,22 +536,22 @@ export type ArticleScalarWhereInput = {
   id?: Prisma.StringFilter<"Article"> | string
   title?: Prisma.StringFilter<"Article"> | string
   content?: Prisma.StringFilter<"Article"> | string
-  clerkId?: Prisma.StringFilter<"Article"> | string
+  clerkId?: Prisma.StringNullableFilter<"Article"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Article"> | Date | string
   summary?: Prisma.StringFilter<"Article"> | string
   updateAt?: Prisma.DateTimeFilter<"Article"> | Date | string
-  userId?: Prisma.StringFilter<"Article"> | string
+  userId?: Prisma.StringNullableFilter<"Article"> | string | null
 }
 
 export type ArticleCreateWithoutQuizzesInput = {
   id?: string
   title: string
   content: string
-  clerkId: string
+  clerkId?: string | null
   createdAt?: Date | string
   summary: string
   updateAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutArticlesInput
+  user?: Prisma.UserCreateNestedOneWithoutArticlesInput
   scores?: Prisma.ScoreCreateNestedManyWithoutArticleInput
 }
 
@@ -552,11 +559,11 @@ export type ArticleUncheckedCreateWithoutQuizzesInput = {
   id?: string
   title: string
   content: string
-  clerkId: string
+  clerkId?: string | null
   createdAt?: Date | string
   summary: string
   updateAt?: Date | string
-  userId: string
+  userId?: string | null
   scores?: Prisma.ScoreUncheckedCreateNestedManyWithoutArticleInput
 }
 
@@ -580,11 +587,11 @@ export type ArticleUpdateWithoutQuizzesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutArticlesNestedInput
+  user?: Prisma.UserUpdateOneWithoutArticlesNestedInput
   scores?: Prisma.ScoreUpdateManyWithoutArticleNestedInput
 }
 
@@ -592,11 +599,11 @@ export type ArticleUncheckedUpdateWithoutQuizzesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scores?: Prisma.ScoreUncheckedUpdateManyWithoutArticleNestedInput
 }
 
@@ -604,11 +611,11 @@ export type ArticleCreateWithoutScoresInput = {
   id?: string
   title: string
   content: string
-  clerkId: string
+  clerkId?: string | null
   createdAt?: Date | string
   summary: string
   updateAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutArticlesInput
+  user?: Prisma.UserCreateNestedOneWithoutArticlesInput
   quizzes?: Prisma.QuizCreateNestedManyWithoutArticleInput
 }
 
@@ -616,11 +623,11 @@ export type ArticleUncheckedCreateWithoutScoresInput = {
   id?: string
   title: string
   content: string
-  clerkId: string
+  clerkId?: string | null
   createdAt?: Date | string
   summary: string
   updateAt?: Date | string
-  userId: string
+  userId?: string | null
   quizzes?: Prisma.QuizUncheckedCreateNestedManyWithoutArticleInput
 }
 
@@ -644,11 +651,11 @@ export type ArticleUpdateWithoutScoresInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutArticlesNestedInput
+  user?: Prisma.UserUpdateOneWithoutArticlesNestedInput
   quizzes?: Prisma.QuizUpdateManyWithoutArticleNestedInput
 }
 
@@ -656,11 +663,11 @@ export type ArticleUncheckedUpdateWithoutScoresInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quizzes?: Prisma.QuizUncheckedUpdateManyWithoutArticleNestedInput
 }
 
@@ -668,7 +675,7 @@ export type ArticleCreateManyUserInput = {
   id?: string
   title: string
   content: string
-  clerkId: string
+  clerkId?: string | null
   createdAt?: Date | string
   summary: string
   updateAt?: Date | string
@@ -678,7 +685,7 @@ export type ArticleUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -690,7 +697,7 @@ export type ArticleUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -702,7 +709,7 @@ export type ArticleUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -757,7 +764,7 @@ export type ArticleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   summary?: boolean
   updateAt?: boolean
   userId?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.Article$userArgs<ExtArgs>
   quizzes?: boolean | Prisma.Article$quizzesArgs<ExtArgs>
   scores?: boolean | Prisma.Article$scoresArgs<ExtArgs>
   _count?: boolean | Prisma.ArticleCountOutputTypeDefaultArgs<ExtArgs>
@@ -772,7 +779,7 @@ export type ArticleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   summary?: boolean
   updateAt?: boolean
   userId?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.Article$userArgs<ExtArgs>
 }, ExtArgs["result"]["article"]>
 
 export type ArticleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -784,7 +791,7 @@ export type ArticleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   summary?: boolean
   updateAt?: boolean
   userId?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.Article$userArgs<ExtArgs>
 }, ExtArgs["result"]["article"]>
 
 export type ArticleSelectScalar = {
@@ -800,22 +807,22 @@ export type ArticleSelectScalar = {
 
 export type ArticleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "content" | "clerkId" | "createdAt" | "summary" | "updateAt" | "userId", ExtArgs["result"]["article"]>
 export type ArticleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.Article$userArgs<ExtArgs>
   quizzes?: boolean | Prisma.Article$quizzesArgs<ExtArgs>
   scores?: boolean | Prisma.Article$scoresArgs<ExtArgs>
   _count?: boolean | Prisma.ArticleCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ArticleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.Article$userArgs<ExtArgs>
 }
 export type ArticleIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.Article$userArgs<ExtArgs>
 }
 
 export type $ArticlePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Article"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>
+    user: Prisma.$UserPayload<ExtArgs> | null
     quizzes: Prisma.$QuizPayload<ExtArgs>[]
     scores: Prisma.$ScorePayload<ExtArgs>[]
   }
@@ -823,11 +830,11 @@ export type $ArticlePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: string
     title: string
     content: string
-    clerkId: string
+    clerkId: string | null
     createdAt: Date
     summary: string
     updateAt: Date
-    userId: string
+    userId: string | null
   }, ExtArgs["result"]["article"]>
   composites: {}
 }
@@ -1222,7 +1229,7 @@ readonly fields: ArticleFieldRefs;
  */
 export interface Prisma__ArticleClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.Article$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Article$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   quizzes<T extends Prisma.Article$quizzesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Article$quizzesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuizPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   scores<T extends Prisma.Article$scoresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Article$scoresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScorePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1458,6 +1465,11 @@ export type ArticleFindManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Skip the first `n` Articles.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Articles.
+   */
   distinct?: Prisma.ArticleScalarFieldEnum | Prisma.ArticleScalarFieldEnum[]
 }
 
@@ -1655,6 +1667,25 @@ export type ArticleDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Articles to delete.
    */
   limit?: number
+}
+
+/**
+ * Article.user
+ */
+export type Article$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

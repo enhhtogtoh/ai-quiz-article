@@ -7,14 +7,15 @@ export async function POST(req: NextRequest) {
   const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
   });
+
   try {
     const body = await req.json();
     const { content } = body;
 
     if (!content) {
       return NextResponse.json(
-        { error: "content is required" },
-        { status: 400 },
+        { error: "content шаардлагатай" },
+        { status: 400 }
       );
     }
 
@@ -56,17 +57,31 @@ ${content}
       quizzes = JSON.parse(output);
     } catch {
       return NextResponse.json(
-        { error: "AI returned invalid JSON", raw: output },
-        { status: 500 },
+        { error: "AI буруу JSON буцаалаа", raw: output },
+        { status: 500 }
       );
     }
 
-    return NextResponse.json({ quizzes }, { status: 200 });
+    
+    const formatted = quizzes.map((q: any) => {
+      const index = q.options.findIndex(
+        (opt: string) => opt === q.answer
+      );
+
+      return {
+        question: q.question,
+        options: q.options,
+        answer: index === -1 ? 0 : index, 
+      };
+    });
+
+    return NextResponse.json({ quizzes: formatted }, { status: 200 });
+
   } catch (error) {
     console.error("POST /api/generate error:", error);
     return NextResponse.json(
-      { error: "Failed to generate quiz" },
-      { status: 500 },
+      { error: "Quiz үүсгэхэд алдаа гарлаа" },
+      { status: 500 }
     );
   }
 }
