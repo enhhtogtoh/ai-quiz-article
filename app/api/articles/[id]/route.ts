@@ -32,7 +32,7 @@ import { auth } from "@clerk/nextjs/server";
 
 export async function DELETE(
   req: NextRequest,
-  context: { params: { id: string } },
+  { params }: { params: { id: string } },
 ) {
   try {
     const { userId } = await auth();
@@ -41,10 +41,8 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { id } = context.params;
-
     const article = await prisma.article.findUnique({
-      where: { id },
+      where: { id: params.id },
     });
 
     if (!article) {
@@ -56,12 +54,12 @@ export async function DELETE(
     }
 
     await prisma.article.delete({
-      where: { id },
+      where: { id: params.id },
     });
 
     return NextResponse.json({ message: "Deleted" });
   } catch (error) {
-    console.error(error);
+    console.error("DELETE ERROR:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
