@@ -42,17 +42,19 @@ export async function POST(req: NextRequest, { params }: Context) {
     }
 
     const createdQuizzes = await Promise.all(
-      quizzes.map((quiz: QuizInput) =>
-        prisma.quiz.create({
+      quizzes.map((quiz: QuizInput) => {
+        const answerIndex = quiz.options.indexOf(quiz.answer);
+
+        return prisma.quiz.create({
           data: {
             clerkId,
             question: quiz.question,
             options: quiz.options,
-            answer: quiz.answer,
+            answer: answerIndex >= 0 ? answerIndex : 0,
             articleId,
           },
-        }),
-      ),
+        });
+      }),
     );
 
     return NextResponse.json(
