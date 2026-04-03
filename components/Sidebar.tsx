@@ -40,29 +40,18 @@ export default function Sidebar({
   const handleTakeQuiz = (articleId: string) => {
     router.push(`/quiz/${articleId}`);
   };
-  const handleDelete = async (id: string) => {
-    if (!confirm("Устгах уу?")) return;
+const handleDelete = async (id: string) => {
+  console.log("deleting:", id);
 
-    try {
-      const res = await fetch(`/api/articles/${id}`, {
-        method: "DELETE",
-      });
+  const res = await fetch(`/api/articles/${id}`, {
+    method: "DELETE",
+  });
 
-      const data = await res.json();
+  console.log("status:", res.status);
 
-      if (!res.ok) {
-        console.error(data);
-        alert(data.error || "Алдаа гарлаа");
-        return;
-      }
-
-      // state update
-      setArticles((prev) => prev.filter((a) => a.id !== id));
-    } catch (err) {
-      console.error(err);
-      alert("Server error");
-    }
-  };
+  const data = await res.json();
+  console.log("response:", data);
+};
   return (
     <div className="h-screen p-4 overflow-y-auto bg-white border-r w-80">
       <h2 className="mb-4 text-xl font-bold">Article History</h2>
@@ -85,7 +74,7 @@ export default function Sidebar({
 
                   <button
                     onClick={(e) => {
-                      e.stopPropagation(); // ❗ маш чухал
+                      e.stopPropagation();
                       handleDelete(article.id);
                     }}
                     className="text-sm text-red-500 hover:text-red-700"
@@ -112,7 +101,7 @@ export default function Sidebar({
                   variant="outline"
                   size="sm"
                   onClick={(e) => {
-                    e.stopPropagation(); // ❗ мөн энд
+                    e.stopPropagation(); 
                     handleTakeQuiz(article.id);
                   }}
                 >
