@@ -29,40 +29,24 @@ export async function GET(_req: NextRequest, { params }: Context) {
   }
 }
 
+type Context1 = {
+  params: Promise<{ id: string }>;
+};
 
-export async function DELETE(
-  req: NextRequest,
-  context: { params: Promise<{ id: string }> },
-) {
+export async function DELETE(req: NextRequest, { params }: Context1) {
   try {
-    const { userId } = await auth();
-
-    if (!userId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    // ✅ Promise await хийж байна
-    const { id } = await context.params;
-
-    const article = await prisma.article.findUnique({
-      where: { id },
-    });
-
-    if (!article) {
-      return NextResponse.json({ error: "Not found" }, { status: 404 });
-    }
-
-    if (article.clerkId !== userId) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-    }
+    const { id } = await params;
 
     await prisma.article.delete({
       where: { id },
     });
 
-    return NextResponse.json({ message: "Deleted" });
+    return NextResponse.json({ message: "Deleted successfully" });
   } catch (error) {
-    console.error("DELETE ERROR:", error);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    console.error("DELETE error:", error);
+    return NextResponse.json(
+      { error: "Failed to delete article" },
+      { status: 500 },
+    );
   }
 }

@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -22,9 +23,14 @@ interface Article {
 interface SidebarProps {
   articles: Article[];
   loading?: boolean;
+  setArticles: React.Dispatch<React.SetStateAction<Article[]>>;
 }
 
-export default function Sidebar({ articles, loading = false }: SidebarProps) {
+export default function Sidebar({
+  articles,
+  loading = false,
+  setArticles,
+}: SidebarProps) {
   const router = useRouter();
 
   const handleArticleClick = (articleId: string) => {
@@ -42,15 +48,19 @@ export default function Sidebar({ articles, loading = false }: SidebarProps) {
         method: "DELETE",
       });
 
-      if (!res.ok) throw new Error("Delete failed");
+      const data = await res.json();
 
-      alert("Амжилттай устгалаа");
+      if (!res.ok) {
+        console.error(data);
+        alert(data.error || "Алдаа гарлаа");
+        return;
+      }
 
-      // refresh хийх (2 арга)
-      window.location.reload();
+      // state update
+      setArticles((prev) => prev.filter((a) => a.id !== id));
     } catch (err) {
       console.error(err);
-      alert("Алдаа гарлаа");
+      alert("Server error");
     }
   };
   return (
