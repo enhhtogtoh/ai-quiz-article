@@ -24,7 +24,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    // Fetch articles for sidebar
+  
     const fetchArticles = async () => {
       try {
         const response = await fetch("/api/articles");
@@ -77,7 +77,7 @@ export default function Home() {
     setLoading(true);
 
     try {
-      // Save article to database
+     
       const saveResponse = await fetch("/api/articles", {
         method: "POST",
         headers: {
@@ -87,7 +87,7 @@ export default function Home() {
           title,
           content,
           summary,
-          quizzes: [], // Will be generated on the quiz page
+          quizzes: [], 
         }),
       });
 
@@ -95,12 +95,12 @@ export default function Home() {
         await saveResponse.json();
         toast.success("Article saved successfully!");
 
-        // Refresh articles list
+      
         const response = await fetch("/api/articles");
         const data = await response.json();
         setArticles(data);
 
-        // Reset form
+       
         setTitle("");
         setContent("");
         setSummary(null);
@@ -128,8 +128,8 @@ export default function Home() {
   return (
     <div className="flex">
       <Sidebar articles={articles} loading={articleLoading} />
-      <main className="flex-1 p-8 min-h-screen bg-gray-50">
-        <div className="mx-auto max-w-2xl">
+      <main className="flex-1 min-h-screen p-8 bg-gray-50">
+        <div className="max-w-2xl mx-auto">
           <ArticleForm
             title={title}
             content={content}

@@ -25,6 +25,7 @@ export default function RootLayout({
         <body className={inter.className}>
           <UserProvider>
             <Header />
+            {/* global content */}
             <main className="mx-auto">{children}</main>
           </UserProvider>
         </body>

@@ -56,7 +56,7 @@ export default function ArticleForm({
   return (
     <Card>
       <CardHeader>
-        <div className="flex gap-2 items-center mb-2">
+        <div className="flex items-center gap-2 mb-2">
           <Sparkles className="w-6 h-6 text-primary" />
           <CardTitle className="text-3xl">Article Quiz Generator</CardTitle>
         </div>
@@ -69,7 +69,7 @@ export default function ArticleForm({
       <form onSubmit={handleGenerateSummary}>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="title" className="flex gap-2 items-center">
+            <Label htmlFor="title" className="flex items-center gap-2">
               <FileText className="w-4 h-4" />
               Article Title
             </Label>
@@ -82,7 +82,7 @@ export default function ArticleForm({
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="content" className="flex gap-2 items-center">
+            <Label htmlFor="content" className="flex items-center gap-2">
               <FileText className="w-4 h-4" />
               Article Content
             </Label>
@@ -97,7 +97,7 @@ export default function ArticleForm({
           </div>
           {summary && (
             <div className="space-y-2">
-              <Label className="flex gap-2 items-center">
+              <Label className="flex items-center gap-2">
                 <BookOpen className="w-4 h-4" />
                 Summary
               </Label>
@@ -124,7 +124,7 @@ export default function ArticleForm({
                 onClick={onSaveArticle}
                 disabled={loading || !title}
                 variant="outline"
-                className="flex gap-2 items-center"
+                className="flex items-center gap-2"
               >
                 <Save className="w-4 h-4" />
                 Save Article
@@ -140,6 +140,7 @@ export default function ArticleForm({
             </>
           )}
         </CardFooter>
+        {/* sss */}
       </form>
     </Card>
   );
