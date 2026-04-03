@@ -27,3 +27,41 @@ export async function GET(_req: NextRequest, { params }: Context) {
     );
   }
 }
+
+import { auth } from "@clerk/nextjs/server";
+
+export async function DELETE(
+  req: NextRequest,
+  context: { params: { id: string } },
+) {
+  try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { id } = context.params;
+
+    const article = await prisma.article.findUnique({
+      where: { id },
+    });
+
+    if (!article) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
+    }
+
+    if (article.clerkId !== userId) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    await prisma.article.delete({
+      where: { id },
+    });
+
+    return NextResponse.json({ message: "Deleted" });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  }
+}
