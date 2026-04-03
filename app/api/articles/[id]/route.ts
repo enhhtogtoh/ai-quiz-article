@@ -1,3 +1,4 @@
+import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
@@ -28,11 +29,10 @@ export async function GET(_req: NextRequest, { params }: Context) {
   }
 }
 
-import { auth } from "@clerk/nextjs/server";
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  context: { params: Promise<{ id: string }> },
 ) {
   try {
     const { userId } = await auth();
@@ -41,8 +41,11 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // ✅ Promise await хийж байна
+    const { id } = await context.params;
+
     const article = await prisma.article.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!article) {
@@ -54,7 +57,7 @@ export async function DELETE(
     }
 
     await prisma.article.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({ message: "Deleted" });
