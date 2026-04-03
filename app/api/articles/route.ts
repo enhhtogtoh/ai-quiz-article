@@ -51,7 +51,8 @@ export async function POST(req: NextRequest) {
       const client = await clerkClient();
       const clerkUser = await client.users.getUser(clerkId);
       const email = clerkUser.emailAddresses[0]?.emailAddress ?? "";
-      const name = `${clerkUser.firstName ?? ""} ${clerkUser.lastName ?? ""}`.trim();
+      const name =
+        `${clerkUser.firstName ?? ""} ${clerkUser.lastName ?? ""}`.trim();
 
       dbUser = await prisma.user.create({
         data: { clerkId, email, name },
@@ -73,6 +74,44 @@ export async function POST(req: NextRequest) {
     console.error("POST /api/articles error:", error);
     return NextResponse.json(
       { error: "Failed to create article" },
+      { status: 500 },
+    );
+  }
+}
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return NextResponse.json({ error: "Нэвтрээгүй байна" }, { status: 401 });
+    }
+
+    const article = await prisma.article.findUnique({
+      where: { id: params.id },
+    });
+
+    if (!article) {
+      return NextResponse.json({ error: "Article олдсонгүй" }, { status: 404 });
+    }
+
+   
+    if (article.clerkId !== userId) {
+      return NextResponse.json({ error: "Хандах эрхгүй" }, { status: 403 });
+    }
+
+    await prisma.article.delete({
+      where: { id: params.id },
+    });
+
+    return NextResponse.json({ message: "Амжилттай устгалаа" });
+  } catch (error) {
+    console.error("DELETE ERROR:", error);
+    return NextResponse.json(
+      { error: "Устгах үед алдаа гарлаа" },
       { status: 500 },
     );
   }
